@@ -1,0 +1,482 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ==================== AUTH & USERS ====================
+
+model User {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  name           String
+  phone          String?
+  passwordHash   String
+  role           UserRole  @default(CUSTOMER)
+  avatar         String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Relations
+  customerJobs   Job[]          @relation("CustomerJobs")
+  technicianJobs Job[]          @relation("TechnicianJobs")
+  properties     Property[]
+  invoices       Invoice[]
+  memberships    Membership[]
+  reviews        Review[]
+  leads          Lead[]
+  notifications  Notification[]
+  techProfile    TechProfile?
+  messages       Message[]      @relation("SentMessages")
+  received       Message[]      @relation("ReceivedMessages")
+}
+
+enum UserRole {
+  ADMIN
+  DISPATCHER
+  TECHNICIAN
+  CUSTOMER
+}
+
+model TechProfile {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id])
+  skills          String[] // ["HVAC", "Refrigeration", "Ice Machines"]
+  certifications  String[]
+  hireDate        DateTime
+  truckNumber     String?
+  currentLat      Float?
+  currentLng      Float?
+  isAvailable     Boolean  @default(true)
+  avgRating       Float    @default(5.0)
+  jobsCompleted   Int      @default(0)
+  revenueGenerated Float   @default(0)
+}
+
+// ==================== PROPERTIES & UNITS ====================
+
+model Property {
+  id          String   @id @default(cuid())
+  customerId  String
+  customer    User     @relation(fields: [customerId], references: [id])
+  name        String
+  address     String
+  city        String
+  state       String   @default("KY")
+  zip         String
+  lat         Float?
+  lng         Float?
+  propertyType PropertyType @default(COMMERCIAL)
+  notes       String?
+  createdAt   DateTime @default(now())
+
+  units       Unit[]
+  jobs        Job[]
+}
+
+enum PropertyType {
+  COMMERCIAL
+  RESIDENTIAL
+  INDUSTRIAL
+}
+
+model Unit {
+  id            String    @id @default(cuid())
+  propertyId    String
+  property      Property  @relation(fields: [propertyId], references: [id])
+  unitType      UnitType
+  brand         String
+  model         String
+  serialNumber  String?
+  installDate   DateTime?
+  warrantyEnd   DateTime?
+  filterSize    String?
+  refrigerant   String?
+  tonnage       Float?
+  lastService   DateTime?
+  condition     UnitCondition @default(GOOD)
+  notes         String?
+  photos        String[]
+  createdAt     DateTime  @default(now())
+
+  jobs          Job[]
+  maintenanceHistory MaintenanceRecord[]
+}
+
+enum UnitType {
+  AC
+  FURNACE
+  HEAT_PUMP
+  ROOFTOP_UNIT
+  SPLIT_SYSTEM
+  PACKAGE_UNIT
+  REFRIGERATION
+  ICE_MACHINE
+  WALK_IN_COOLER
+  WALK_IN_FREEZER
+  REACH_IN_COOLER
+  EXHAUST_FAN
+  MAKE_UP_AIR
+}
+
+enum UnitCondition {
+  EXCELLENT
+  GOOD
+  FAIR
+  POOR
+  NEEDS_REPLACEMENT
+}
+
+model MaintenanceRecord {
+  id          String   @id @default(cuid())
+  unitId      String
+  unit        Unit     @relation(fields: [unitId], references: [id])
+  date        DateTime
+  type        String
+  description String
+  techName    String
+  cost        Float?
+  photos      String[]
+}
+
+// ==================== JOBS & SCHEDULING ====================
+
+model Job {
+  id              String      @id @default(cuid())
+  jobNumber       String      @unique
+  customerId      String
+  customer        User        @relation("CustomerJobs", fields: [customerId], references: [id])
+  technicianId    String?
+  technician      User?       @relation("TechnicianJobs", fields: [technicianId], references: [id])
+  propertyId      String
+  property        Property    @relation(fields: [propertyId], references: [id])
+  unitId          String?
+  unit            Unit?       @relation(fields: [unitId], references: [id])
+
+  title           String
+  description     String
+  jobType         JobType
+  priority        Priority    @default(NORMAL)
+  status          JobStatus   @default(PENDING)
+
+  scheduledDate   DateTime?
+  scheduledStart  String?     // "09:00"
+  scheduledEnd    String?     // "11:00"
+  actualStart     DateTime?
+  actualEnd       DateTime?
+
+  estimatedCost   Float?
+  actualCost      Float?
+  laborHours      Float?
+
+  notes           String?
+  techNotes       String?
+  customerNotes   String?
+  diagnosisNotes  String?
+
+  photosBefore    String[]
+  photosAfter     String[]
+
+  partsUsed       String[]
+
+  urgencyScore    Int?        // 1-10 AI scored
+  aiDiagnosis     String?
+
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  completedAt     DateTime?
+
+  invoice         Invoice?
+  jobPhotos       JobPhoto[]
+}
+
+enum JobType {
+  REPAIR
+  MAINTENANCE
+  INSTALLATION
+  INSPECTION
+  EMERGENCY
+  WARRANTY
+  CALLBACK
+  ESTIMATE
+}
+
+enum Priority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+  EMERGENCY
+}
+
+enum JobStatus {
+  PENDING
+  SCHEDULED
+  EN_ROUTE
+  IN_PROGRESS
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+  CALLBACK
+}
+
+model JobPhoto {
+  id        String   @id @default(cuid())
+  jobId     String
+  job       Job      @relation(fields: [jobId], references: [id])
+  url       String
+  caption   String?
+  phase     PhotoPhase @default(DURING)
+  createdAt DateTime @default(now())
+}
+
+enum PhotoPhase {
+  BEFORE
+  DURING
+  AFTER
+}
+
+// ==================== INVOICES & PAYMENTS ====================
+
+model Invoice {
+  id            String        @id @default(cuid())
+  invoiceNumber String        @unique
+  jobId         String        @unique
+  job           Job           @relation(fields: [jobId], references: [id])
+  customerId    String
+  customer      User          @relation(fields: [customerId], references: [id])
+
+  subtotal      Float
+  tax           Float
+  total         Float
+  discount      Float         @default(0)
+
+  status        InvoiceStatus @default(DRAFT)
+  dueDate       DateTime?
+  paidAt        DateTime?
+  paymentMethod String?
+
+  lineItems     Json          // Array of {description, qty, rate, amount}
+  notes         String?
+
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+// ==================== MEMBERSHIPS ====================
+
+model Membership {
+  id            String           @id @default(cuid())
+  customerId    String
+  customer      User             @relation(fields: [customerId], references: [id])
+  plan          MembershipPlan
+  status        MembershipStatus @default(ACTIVE)
+  startDate     DateTime
+  renewalDate   DateTime
+  monthlyRate   Float
+  visitsPerYear Int              @default(2)
+  visitsUsed    Int              @default(0)
+  discount      Float            @default(15) // percentage
+  priority      Boolean          @default(true)
+  notes         String?
+  createdAt     DateTime         @default(now())
+}
+
+enum MembershipPlan {
+  BRONZE
+  SILVER
+  GOLD
+  PLATINUM
+}
+
+enum MembershipStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+  PENDING
+}
+
+// ==================== LEADS & SALES ====================
+
+model Lead {
+  id            String     @id @default(cuid())
+  customerId    String?
+  customer      User?      @relation(fields: [customerId], references: [id])
+
+  name          String
+  email         String?
+  phone         String
+  address       String?
+
+  source        LeadSource
+  status        LeadStatus @default(NEW)
+
+  serviceNeeded String
+  description   String?
+  urgency       Int?       // 1-10
+
+  estimatedValue Float?
+  actualValue    Float?
+
+  assignedTo    String?
+  followUpDate  DateTime?
+
+  notes         String?
+
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  convertedAt   DateTime?
+}
+
+enum LeadSource {
+  WEBSITE
+  PHONE
+  REFERRAL
+  GOOGLE_ADS
+  FACEBOOK
+  YELP
+  BBB
+  WALK_IN
+  REPEAT
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  ESTIMATE_SENT
+  FOLLOW_UP
+  WON
+  LOST
+}
+
+// ==================== REVIEWS ====================
+
+model Review {
+  id          String   @id @default(cuid())
+  customerId  String
+  customer    User     @relation(fields: [customerId], references: [id])
+  rating      Int      // 1-5
+  title       String?
+  content     String
+  source      String   @default("website") // google, yelp, website
+  isPublished Boolean  @default(true)
+  response    String?
+  createdAt   DateTime @default(now())
+}
+
+// ==================== NOTIFICATIONS ====================
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  title     String
+  message   String
+  type      String   // job_update, payment, reminder, alert
+  isRead    Boolean  @default(false)
+  link      String?
+  createdAt DateTime @default(now())
+}
+
+// ==================== MESSAGES ====================
+
+model Message {
+  id         String   @id @default(cuid())
+  senderId   String
+  sender     User     @relation("SentMessages", fields: [senderId], references: [id])
+  receiverId String
+  receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  content    String
+  isRead     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+// ==================== INSTALL PROJECTS ====================
+
+model InstallProject {
+  id              String        @id @default(cuid())
+  projectNumber   String        @unique
+  customerName    String
+  customerPhone   String
+  customerEmail   String?
+  propertyAddress String
+
+  equipmentOrdered String
+  equipmentStatus  String       @default("pending")
+  permitNumber     String?
+  permitStatus     String       @default("not_submitted")
+
+  scheduledDate    DateTime?
+  estimatedDays    Int          @default(1)
+
+  totalCost        Float
+  depositPaid      Float        @default(0)
+  balanceDue       Float
+
+  status           InstallStatus @default(PLANNING)
+
+  notes            String?
+  timeline         Json?        // Array of {date, event, status}
+
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+}
+
+enum InstallStatus {
+  PLANNING
+  EQUIPMENT_ORDERED
+  PERMIT_PENDING
+  SCHEDULED
+  IN_PROGRESS
+  INSPECTION
+  COMPLETE
+}
+
+// ==================== ANALYTICS ====================
+
+model DailyMetric {
+  id              String   @id @default(cuid())
+  date            DateTime @unique
+  revenue         Float    @default(0)
+  jobsCompleted   Int      @default(0)
+  jobsScheduled   Int      @default(0)
+  leadsReceived   Int      @default(0)
+  leadsConverted  Int      @default(0)
+  missedCalls     Int      @default(0)
+  avgTicket       Float    @default(0)
+  techUtilization Float    @default(0) // percentage
+  membershipSales Int      @default(0)
+  installRevenue  Float    @default(0)
+  serviceRevenue  Float    @default(0)
+}
+
+// ==================== SERVICE REQUESTS (PUBLIC) ====================
+
+model ServiceRequest {
+  id            String   @id @default(cuid())
+  name          String
+  email         String
+  phone         String
+  address       String?
+  serviceType   String
+  urgency       String   @default("normal")
+  description   String
+  photoUrl      String?
+  preferredDate String?
+  preferredTime String?
+  status        String   @default("new")
+  createdAt     DateTime @default(now())
+}

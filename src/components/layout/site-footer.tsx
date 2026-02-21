@@ -10,6 +10,8 @@ import {
   Facebook,
   Shield,
   ChevronRight,
+  Star,
+  Award,
 } from "lucide-react";
 
 const quickLinks = [
@@ -62,13 +64,31 @@ export default function SiteFooter() {
             </p>
             <div className="flex items-center gap-3">
               <a
-                href="https://facebook.com/fdpiercecompany"
+                href="https://www.facebook.com/profile.php?id=61572412371677"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-slate-400 transition-colors hover:bg-blue-500/20 hover:text-blue-400"
                 aria-label="Facebook"
               >
                 <Facebook className="h-4 w-4" />
+              </a>
+              <a
+                href="https://www.yelp.com/biz/f-d-pierce-louisville"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-slate-400 transition-colors hover:bg-red-500/20 hover:text-red-400"
+                aria-label="Yelp"
+              >
+                <Star className="h-4 w-4" />
+              </a>
+              <a
+                href="https://www.bbb.org/us/ky/louisville/profile/heating-contractors/fd-pierce-company-0402-2405"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-slate-400 transition-colors hover:bg-green-500/20 hover:text-green-400"
+                aria-label="BBB"
+              >
+                <Award className="h-4 w-4" />
               </a>
             </div>
           </div>

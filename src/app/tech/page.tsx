@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import {
@@ -335,8 +336,19 @@ function BottomNav({ active }: { active: string }) {
 /* ================================================================== */
 
 export default function TechPage() {
+  const router = useRouter();
   const [expandedJobId, setExpandedJobId] = useState<number | null>(2); // IN_PROGRESS expanded by default
   const [techNotes, setTechNotes] = useState("");
+  const [authChecked, setAuthChecked] = useState(false);
+
+  useEffect(() => {
+    const match = document.cookie.match(/fdp-demo-auth=([^;]+)/);
+    if (!match) {
+      router.replace("/auth/login");
+      return;
+    }
+    setAuthChecked(true);
+  }, [router]);
 
   const today = new Date();
   const dateStr = today.toLocaleDateString("en-US", {
@@ -348,6 +360,14 @@ export default function TechPage() {
 
   const currentJob = todaysJobs.find((j) => j.status === "IN_PROGRESS")!;
   const completedCount = todaysJobs.filter((j) => j.status === "COMPLETED").length;
+
+  if (!authChecked) {
+    return (
+      <div className="flex h-screen items-center justify-center bg-[#0a1628]">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-500/30 border-t-blue-500" />
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-md pb-24">

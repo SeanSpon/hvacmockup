@@ -138,6 +138,12 @@ export default function SiteHeader() {
           {/* Right side: CTA + hamburger */}
           <div className="flex items-center gap-3">
             <Link
+              href="/auth/login"
+              className="hidden rounded-md px-3 py-2 text-sm font-medium text-slate-400 transition-colors hover:text-white sm:inline-flex"
+            >
+              Dashboard
+            </Link>
+            <Link
               href="/contact"
               className="hidden rounded-lg bg-gradient-to-r from-orange-500 to-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition-all hover:shadow-orange-500/30 hover:brightness-110 sm:inline-flex"
             >
@@ -223,6 +229,13 @@ export default function SiteHeader() {
 
         {/* Drawer footer */}
         <div className="border-t border-white/5 p-4">
+          <Link
+            href="/auth/login"
+            onClick={() => setMobileOpen(false)}
+            className="mb-2 flex w-full items-center justify-center rounded-lg border border-white/10 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/5"
+          >
+            Dashboard Login
+          </Link>
           <Link
             href="/contact"
             onClick={() => setMobileOpen(false)}

@@ -1,6 +1,7 @@
 "use client";
 
-import { Snowflake, LogOut, Bell } from "lucide-react";
+import Image from "next/image";
+import { LogOut, Bell } from "lucide-react";
 
 export default function PortalLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,7 +11,7 @@ export default function PortalLayout({ children }: { children: React.ReactNode }
         <div className="mx-auto flex max-w-4xl items-center justify-between px-4 py-3 sm:px-6">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <Snowflake className="h-5 w-5 text-blue-400" />
+            <Image src="/images/logo.webp" alt="FD Pierce Company" width={20} height={20} className="h-5 w-auto" />
             <span className="text-sm font-bold text-white sm:text-base">
               FD Pierce
             </span>

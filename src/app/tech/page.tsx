@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import {
   Calendar,
   ClipboardList,
@@ -354,7 +355,7 @@ export default function TechPage() {
       <header className="sticky top-0 z-40 border-b border-white/10 bg-[#060e1e]/95 px-4 py-3 backdrop-blur-lg">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Snowflake className="h-5 w-5 text-blue-400" />
+            <Image src="/images/logo.webp" alt="FD Pierce Company" width={20} height={20} className="h-5 w-auto" />
             <span className="text-sm font-bold text-white">FD Pierce</span>
           </div>
           <div className="flex items-center gap-3">

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Phone,
@@ -10,7 +11,6 @@ import {
   X,
   Facebook,
   Shield,
-  Snowflake,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -108,17 +108,10 @@ export default function SiteHeader() {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400">
-              <Snowflake className="h-5 w-5 text-white" />
-            </div>
-            <div className="flex flex-col">
-              <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-xl font-extrabold leading-tight tracking-tight text-transparent">
-                FDP
-              </span>
-              <span className="text-[10px] font-medium uppercase leading-none tracking-[0.15em] text-slate-500">
-                Keeping it Cool
-              </span>
-            </div>
+            <Image src="/images/logo.webp" alt="FD Pierce Company" width={48} height={48} className="h-12 w-auto" />
+            <span className="text-[10px] font-medium uppercase leading-none tracking-[0.15em] text-slate-500">
+              Keeping it Cool
+            </span>
           </Link>
 
           {/* Desktop nav */}
@@ -195,12 +188,7 @@ export default function SiteHeader() {
             className="flex items-center gap-2"
             onClick={() => setMobileOpen(false)}
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400">
-              <Snowflake className="h-4 w-4 text-white" />
-            </div>
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-lg font-extrabold text-transparent">
-              FDP
-            </span>
+            <Image src="/images/logo.webp" alt="FD Pierce Company" width={40} height={40} className="h-10 w-auto" />
           </Link>
           <button
             type="button"

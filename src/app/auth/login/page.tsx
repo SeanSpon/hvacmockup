@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Snowflake, Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
+import Image from "next/image";
+import { Mail, Lock, ArrowRight, Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -30,9 +31,7 @@ export default function LoginPage() {
         <div className="rounded-2xl border border-white/10 bg-[#0f1729] p-8 shadow-2xl shadow-black/20">
           {/* Logo */}
           <div className="mb-8 flex flex-col items-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 shadow-lg shadow-blue-500/25">
-              <Snowflake className="h-7 w-7 text-white" />
-            </div>
+            <Image src="/images/logo.webp" alt="FD Pierce Company" width={56} height={56} className="h-14 w-auto" />
             <h1 className="mt-4 text-xl font-bold text-white">FD Pierce Company</h1>
             <p className="mt-1 text-sm text-gray-500">
               Sign in to your account

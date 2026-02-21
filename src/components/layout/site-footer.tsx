@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   Phone,
   Mail,
   MapPin,
   Clock,
   Facebook,
-  Snowflake,
   Shield,
   ChevronRight,
 } from "lucide-react";
@@ -49,17 +49,10 @@ export default function SiteFooter() {
           {/* Column 1: Company info + logo */}
           <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="mb-5 inline-flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400">
-                <Snowflake className="h-5 w-5 text-white" />
-              </div>
-              <div className="flex flex-col">
-                <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-xl font-extrabold leading-tight tracking-tight text-transparent">
-                  FDP
-                </span>
-                <span className="text-[10px] font-medium uppercase leading-none tracking-[0.15em] text-slate-500">
-                  FD Pierce Company
-                </span>
-              </div>
+              <Image src="/images/logo.webp" alt="FD Pierce Company" width={40} height={40} className="h-10 w-auto" />
+              <span className="text-[10px] font-medium uppercase leading-none tracking-[0.15em] text-slate-500">
+                FD Pierce Company
+              </span>
             </Link>
             <p className="mb-5 text-sm leading-relaxed text-slate-400">
               Serving the Louisville metro area since 1978. FD Pierce Company

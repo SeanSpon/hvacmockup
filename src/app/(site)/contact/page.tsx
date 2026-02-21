@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Phone,
@@ -89,6 +90,9 @@ export default function ContactPage() {
     <div className="min-h-screen">
       {/* Hero Banner */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0a1628] via-[#142548] to-[#0a1628] py-24 sm:py-32">
+        <div className="absolute inset-0 opacity-[0.05]">
+          <Image src="/images/service-quality.jpg" alt="FD Pierce Service" fill className="object-cover" />
+        </div>
         <div className="absolute inset-0 bg-grid opacity-40" />
         <div className="absolute left-1/3 top-1/4 h-96 w-96 rounded-full bg-blue-500/5 blur-3xl" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
@@ -417,6 +421,9 @@ export default function ContactPage() {
                       <p>Monday - Friday: 8:00 AM - 4:30 PM</p>
                       <p>Saturday - Sunday: By appointment</p>
                     </div>
+                    <p className="mt-3 text-sm text-slate-300">
+                      We love our customers, so feel free to visit during normal business hours.
+                    </p>
                   </div>
                 </div>
               </div>

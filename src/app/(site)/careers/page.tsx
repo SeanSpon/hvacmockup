@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Briefcase,
@@ -162,6 +163,9 @@ export default function CareersPage() {
     <div className="min-h-screen">
       {/* Hero Banner */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0a1628] via-[#142548] to-[#0a1628] py-24 sm:py-32">
+        <div className="absolute inset-0 opacity-[0.07]">
+          <Image src="/images/team-photo.jpg" alt="FD Pierce Team" fill className="object-cover" />
+        </div>
         <div className="absolute inset-0 bg-grid opacity-40" />
         <div className="absolute left-1/3 top-1/4 h-96 w-96 rounded-full bg-blue-500/5 blur-3xl" />
         <div className="absolute bottom-1/3 right-1/4 h-64 w-64 rounded-full bg-accent-500/5 blur-3xl" />
@@ -461,9 +465,10 @@ export default function CareersPage() {
               Ready to Join the Team?
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-400">
-              Send us your resume and tell us about yourself. Even if you do
-              not see a perfect match above, we are always interested in meeting
-              skilled HVAC professionals.
+              If you&apos;re interested in one of our open positions, start by
+              applying here and attaching your resume. Even if you do not see a
+              perfect match above, we are always interested in meeting skilled
+              HVAC professionals.
             </p>
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link

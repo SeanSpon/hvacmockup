@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Wind,
@@ -27,8 +28,9 @@ const services = [
   {
     icon: Wind,
     title: "Commercial HVAC",
+    image: "/images/service-hvac.jpg",
     description:
-      "FD Pierce Company delivers comprehensive commercial heating, ventilation, and air conditioning solutions for businesses of every size across the Louisville metro area. From initial system design through ongoing maintenance, our certified technicians ensure your facility stays comfortable year-round while maximizing energy efficiency and minimizing operational costs.",
+      "At FD Pierce Co, we offer commercial services for all of your HVAC, refrigeration and ice machine issues. We work hard to get your equipment back up in running in a timely manner. From initial system design through ongoing maintenance, our certified technicians ensure your facility stays comfortable year-round while maximizing energy efficiency and minimizing operational costs.",
     features: [
       "Heating system installation, repair, and maintenance",
       "Commercial cooling and air conditioning services",
@@ -44,6 +46,7 @@ const services = [
   {
     icon: Thermometer,
     title: "Commercial Refrigeration",
+    image: "/images/mission-hvac.jpg",
     description:
       "Protect your perishable inventory and maintain strict temperature compliance with our expert commercial refrigeration services. Our team specializes in every type of commercial cooling equipment, from small reach-in coolers to massive refrigerated warehouse systems. We understand that refrigeration failure means lost product and lost revenue, so we respond quickly and get it right the first time.",
     features: [
@@ -61,8 +64,9 @@ const services = [
   {
     icon: Snowflake,
     title: "Ice Machines",
+    image: "/images/service-consultation.jpg",
     description:
-      "As authorized dealers and service providers for the industry's leading ice machine manufacturers, FD Pierce Company handles everything from selecting the right machine for your volume needs to ongoing preventive maintenance that keeps your ice clean and your machine running efficiently. We service and install all major brands with factory-trained expertise.",
+      "Not sure what type of refrigeration equipment your business needs? Our team of experts can provide consultation services to help you make the right decision. We'll assess your business's needs and recommend the best equipment for you. As authorized dealers and service providers for the industry's leading ice machine manufacturers, FD Pierce Company handles everything from selecting the right machine for your volume needs to ongoing preventive maintenance that keeps your ice clean and your machine running efficiently.",
     features: [
       "Hoshizaki sales, installation, and service",
       "Manitowoc ice machine repair and maintenance",
@@ -78,8 +82,9 @@ const services = [
   {
     icon: Wrench,
     title: "Preventive Maintenance",
+    image: "/images/service-maintenance.jpg",
     description:
-      "The most cost-effective way to protect your HVAC investment is through regular preventive maintenance. Our comprehensive maintenance programs catch small problems before they become expensive emergencies, extend equipment lifespan, and keep your systems running at peak efficiency. A well-maintained system uses less energy, breaks down less often, and lasts years longer than a neglected one.",
+      "Regular maintenance is crucial to keeping your commercial HVAC, refrigeration and ice machine equipment working efficiently. We offer preventative maintenance plans to ensure your equipment is always in top condition, reducing the risk of breakdowns and costly repairs. Our comprehensive maintenance programs catch small problems before they become expensive emergencies, extend equipment lifespan, and keep your systems running at peak efficiency.",
     features: [
       "Seasonal tune-ups (spring cooling prep, fall heating prep)",
       "Air filter replacement and upgrade programs",
@@ -95,8 +100,9 @@ const services = [
   {
     icon: AlertTriangle,
     title: "24/7 Emergency Service",
+    image: "/images/service-emergency.jpg",
     description:
-      "HVAC emergencies do not wait for business hours, and neither do we. When your cooling system fails on the hottest day of summer or your walk-in freezer stops holding temperature at 2 AM, FD Pierce Company is ready to respond. Our emergency technicians are on call around the clock, every day of the year, equipped with the parts and expertise to get you back up and running fast.",
+      "We understand that downtime can be costly for your business. That's why we offer 24/7 emergency repair services for all types of commercial HVAC, refrigeration and ice equipment. Our team is always on call to get your equipment up and running as quickly as possible. When your cooling system fails on the hottest day of summer or your walk-in freezer stops holding temperature at 2 AM, FD Pierce Company is ready to respond with the parts and expertise to get you back up and running fast.",
     features: [
       "Round-the-clock emergency dispatch, 365 days a year",
       "Rapid response times throughout the Louisville area",
@@ -112,8 +118,9 @@ const services = [
   {
     icon: Building2,
     title: "New Installations",
+    image: "/images/service-quality.jpg",
     description:
-      "Whether you are building a new facility, renovating an existing space, or replacing aging equipment, FD Pierce Company manages your installation project from concept to commissioning. Our engineers perform detailed load calculations to ensure your new system is properly sized, and our project managers keep everything on schedule and on budget. We only install equipment we trust and back with our service guarantee.",
+      "At FD Pierce Co, we pride ourselves on providing top-notch customer service. Whether you are building a new facility, renovating an existing space, or replacing aging equipment, FD Pierce Company manages your installation project from concept to commissioning. Our engineers perform detailed load calculations to ensure your new system is properly sized, and our project managers keep everything on schedule and on budget.",
     features: [
       "Custom system design and engineering",
       "Manual J load calculations and energy modeling",
@@ -168,7 +175,7 @@ export default function ServicesPage() {
             >
               <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:py-28">
                 <div
-                  className={`flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-20 ${
+                  className={`flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-20 ${
                     !isEven ? "lg:flex-row-reverse" : ""
                   }`}
                 >
@@ -204,12 +211,24 @@ export default function ServicesPage() {
                     </div>
                   </motion.div>
 
-                  {/* Feature List */}
+                  {/* Image & Feature List */}
                   <motion.div
                     {...fadeInUp}
                     transition={{ duration: 0.6, delay: 0.25 }}
-                    className="flex-1"
+                    className="flex-1 space-y-8"
                   >
+                    {/* Service Image */}
+                    <div className="relative h-64 md:h-80 w-full overflow-hidden rounded-2xl">
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        fill
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628]/60 to-transparent" />
+                    </div>
+
+                    {/* Feature List */}
                     <div className="glass-card rounded-2xl p-8">
                       <h3 className="mb-5 text-sm font-semibold uppercase tracking-wider text-slate-300">
                         Services Included

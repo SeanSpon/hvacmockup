@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
@@ -14,7 +15,6 @@ import {
   Crown,
   HardHat,
   Settings,
-  Snowflake,
   ChevronLeft,
   LogOut,
 } from "lucide-react";
@@ -52,9 +52,7 @@ export default function DashboardSidebar() {
       {/* Logo area */}
       <div className="flex h-16 shrink-0 items-center border-b border-white/5 px-4">
         <Link href="/dashboard" className="flex items-center gap-2.5 overflow-hidden">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400">
-            <Snowflake className="h-4 w-4 text-white" />
-          </div>
+          <Image src="/images/logo.webp" alt="FDP" width={32} height={32} className="h-8 w-auto shrink-0" />
           <span
             className={cn(
               "bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-lg font-extrabold tracking-tight text-transparent transition-opacity duration-200",

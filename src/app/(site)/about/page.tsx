@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Building2,
@@ -170,6 +171,9 @@ export default function AboutPage() {
     <div className="min-h-screen">
       {/* Hero Banner */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#0a1628] via-[#142548] to-[#0a1628] py-24 sm:py-32">
+        <div className="absolute inset-0 opacity-[0.07]">
+          <Image src="/images/team-photo.jpg" alt="FD Pierce Team" fill className="object-cover" />
+        </div>
         <div className="absolute inset-0 bg-grid opacity-40" />
         <div className="absolute right-1/4 top-1/3 h-96 w-96 rounded-full bg-blue-500/5 blur-3xl" />
         <div className="absolute bottom-1/3 left-1/4 h-64 w-64 rounded-full bg-accent-500/5 blur-3xl" />
@@ -212,6 +216,11 @@ export default function AboutPage() {
                 reflects our unwavering commitment to doing things right.
               </p>
               <p className="mt-4 text-lg leading-relaxed text-slate-400">
+                Since 1978 our mission has been to provide top-quality commercial
+                HVAC/R solutions that meet the unique needs of our clients. We strive
+                to exceed expectations and deliver exceptional customer service.
+              </p>
+              <p className="mt-4 text-lg leading-relaxed text-slate-400">
                 In 2024, co-owner Sarah Mann brought new energy and vision to the company,
                 embracing modern technology and digital tools while preserving the core
                 values that have made FD Pierce a Louisville institution. Under her
@@ -224,6 +233,10 @@ export default function AboutPage() {
               {...fadeInUp}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
+              <div className="relative h-72 md:h-96 w-full overflow-hidden rounded-2xl mb-6">
+                <Image src="/images/mission-hvac.jpg" alt="FD Pierce HVAC Systems" fill className="object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628]/60 to-transparent" />
+              </div>
               <div className="glass-card rounded-2xl p-8">
                 <div className="grid grid-cols-2 gap-6">
                   <div className="text-center">
@@ -310,6 +323,9 @@ export default function AboutPage() {
               {...fadeInUp}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
+              <div className="relative h-72 md:h-80 w-full overflow-hidden rounded-2xl mb-6">
+                <Image src="/images/team-photo.jpg" alt="FD Pierce Team" fill className="object-cover" />
+              </div>
               <div className="glass-card rounded-2xl p-8">
                 <div className="mb-6 flex items-center gap-4">
                   <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400">
@@ -346,19 +362,17 @@ export default function AboutPage() {
               </h2>
               <div className="divider-accent mt-4" />
               <p className="mt-6 text-lg leading-relaxed text-slate-400">
+                Our team consists of highly skilled and experienced technicians
+                who are dedicated to delivering the best results for our clients.
+                We prioritize ongoing training and development to ensure that we
+                stay up-to-date with the latest industry advancements.
+              </p>
+              <p className="mt-4 text-lg leading-relaxed text-slate-400">
                 The strength of FD Pierce Company is our people. Our team of 16
                 certified technicians brings a combined century-plus of
                 hands-on experience to every service call. Every technician holds
                 EPA 608 Universal certification and maintains NATE credentials,
                 the gold standard for HVAC excellence.
-              </p>
-              <p className="mt-4 text-lg leading-relaxed text-slate-400">
-                We invest heavily in ongoing training because commercial HVAC
-                technology evolves constantly. Our technicians attend factory
-                training sessions, earn manufacturer certifications, and stay
-                current with the latest diagnostic tools and repair techniques.
-                When an FD Pierce tech arrives at your facility, you can be
-                confident they have the skills to handle whatever they find.
               </p>
               <p className="mt-4 text-lg leading-relaxed text-slate-400">
                 We also believe in growing talent from within. Our apprenticeship

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   Phone,
   AlertTriangle,
@@ -93,6 +94,9 @@ export default function EmergencyPage() {
     <div className="min-h-screen">
       {/* Hero - Red/Orange Urgency Theme */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#1a0a0a] via-[#2d1010] to-[#1a0a0a] py-20 sm:py-28">
+        <div className="absolute inset-0 opacity-[0.08]">
+          <Image src="/images/service-emergency.jpg" alt="Emergency HVAC Repair" fill className="object-cover" />
+        </div>
         <div className="absolute inset-0 bg-grid opacity-30" />
         <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-red-500/8 blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 h-64 w-64 rounded-full bg-orange-500/8 blur-3xl" />

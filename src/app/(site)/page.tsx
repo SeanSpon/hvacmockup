@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   Thermometer,
@@ -127,18 +128,20 @@ const services = [
   {
     icon: Thermometer,
     title: "Commercial HVAC",
-    desc: "Complete heating, ventilation & air conditioning solutions for commercial properties.",
+    desc: "At FD Pierce Co, we offer commercial services for all of your HVAC, refrigeration and ice machine issues.",
     color: "from-blue-500 to-cyan-400",
     iconBg: "bg-blue-500/15",
     iconColor: "text-blue-400",
+    image: "/images/service-hvac.jpg",
   },
   {
     icon: Snowflake,
     title: "Refrigeration",
-    desc: "Walk-in coolers, freezers, and commercial refrigeration systems.",
+    desc: "Walk-in coolers, freezers, and commercial refrigeration systems expertly serviced and maintained.",
     color: "from-cyan-400 to-sky-400",
     iconBg: "bg-cyan-500/15",
     iconColor: "text-cyan-400",
+    image: "/images/service-maintenance.jpg",
   },
   {
     icon: IceCream2,
@@ -147,22 +150,25 @@ const services = [
     color: "from-sky-400 to-indigo-400",
     iconBg: "bg-sky-500/15",
     iconColor: "text-sky-400",
+    image: "/images/service-consultation.jpg",
   },
   {
     icon: Shield,
     title: "Preventive Maintenance",
-    desc: "Keep your systems running efficiently with scheduled maintenance plans.",
+    desc: "Regular maintenance is crucial to keeping your commercial HVAC, refrigeration and ice machine equipment working efficiently.",
     color: "from-emerald-400 to-teal-400",
     iconBg: "bg-emerald-500/15",
     iconColor: "text-emerald-400",
+    image: "/images/service-maintenance.jpg",
   },
   {
     icon: Zap,
     title: "24/7 Emergency Repair",
-    desc: "Round-the-clock emergency service when you need it most.",
+    desc: "We understand that downtime can be costly for your business. Our emergency team is available around the clock.",
     color: "from-orange-400 to-amber-400",
     iconBg: "bg-orange-500/15",
     iconColor: "text-orange-400",
+    image: "/images/service-emergency.jpg",
   },
   {
     icon: Building2,
@@ -171,6 +177,7 @@ const services = [
     color: "from-violet-400 to-purple-400",
     iconBg: "bg-violet-500/15",
     iconColor: "text-violet-400",
+    image: "/images/service-quality.jpg",
   },
 ];
 
@@ -273,6 +280,16 @@ export default function HomePage() {
           <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-600/8 rounded-full blur-[128px]" />
           <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-500/6 rounded-full blur-[128px]" />
           <div className="absolute top-1/3 right-1/3 w-[400px] h-[400px] bg-orange-500/4 rounded-full blur-[100px]" />
+          {/* Team photo background */}
+          <div className="absolute inset-0 opacity-[0.07]">
+            <Image
+              src="/images/team-photo.jpg"
+              alt="FD Pierce Team"
+              fill
+              className="object-cover object-top"
+              priority
+            />
+          </div>
           {/* Subtle grid overlay */}
           <div
             className="absolute inset-0 opacity-[0.03]"
@@ -417,36 +434,49 @@ export default function HomePage() {
                 key={service.title}
                 variants={fadeInUp}
                 custom={i + 1}
-                className="group relative rounded-2xl bg-white/[0.04] backdrop-blur-sm border border-white/[0.08] p-8 hover:bg-white/[0.07] hover:border-white/[0.15] transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/5"
+                className="group relative rounded-2xl bg-white/[0.04] backdrop-blur-sm border border-white/[0.08] overflow-hidden hover:bg-white/[0.07] hover:border-white/[0.15] transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/5"
               >
+                {/* Service image */}
+                <div className="relative h-44 w-full overflow-hidden">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className={`absolute inset-0 bg-gradient-to-t from-[#060e1a] via-[#060e1a]/40 to-transparent`} />
+                </div>
+
                 {/* Gradient hover glow */}
                 <div
                   className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500`}
                 />
 
-                {/* Icon */}
-                <div
-                  className={`relative w-14 h-14 rounded-xl ${service.iconBg} flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110`}
-                >
-                  <service.icon className={`w-7 h-7 ${service.iconColor}`} />
+                <div className="p-8 pt-5">
+                  {/* Icon */}
+                  <div
+                    className={`relative w-14 h-14 rounded-xl ${service.iconBg} flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110`}
+                  >
+                    <service.icon className={`w-7 h-7 ${service.iconColor}`} />
+                  </div>
+
+                  {/* Content */}
+                  <h3 className="relative text-xl font-semibold text-white mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="relative text-gray-400 leading-relaxed mb-5">
+                    {service.desc}
+                  </p>
+
+                  {/* Link */}
+                  <a
+                    href="/services"
+                    className="relative inline-flex items-center gap-1.5 text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors group/link"
+                  >
+                    Learn More
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
+                  </a>
                 </div>
-
-                {/* Content */}
-                <h3 className="relative text-xl font-semibold text-white mb-3">
-                  {service.title}
-                </h3>
-                <p className="relative text-gray-400 leading-relaxed mb-5">
-                  {service.desc}
-                </p>
-
-                {/* Link */}
-                <a
-                  href="/services"
-                  className="relative inline-flex items-center gap-1.5 text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors group/link"
-                >
-                  Learn More
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover/link:translate-x-1" />
-                </a>
               </motion.div>
             ))}
           </div>
@@ -501,6 +531,15 @@ export default function HomePage() {
               <div className="absolute -inset-4 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-3xl blur-2xl opacity-50" />
 
               <div className="relative bg-gradient-to-br from-[#0f1d32] to-[#0a1628] border border-white/10 rounded-3xl p-10 overflow-hidden">
+                {/* Mission HVAC background image */}
+                <div className="absolute inset-0 opacity-[0.08]">
+                  <Image
+                    src="/images/mission-hvac.jpg"
+                    alt="HVAC equipment"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
                 {/* Corner accent */}
                 <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-blue-500/10 to-transparent rounded-bl-full" />
                 <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-cyan-500/10 to-transparent rounded-tr-full" />
